@@ -6,7 +6,7 @@
 /*   By: dly <dly@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 14:10:28 by dly               #+#    #+#             */
-/*   Updated: 2023/02/03 18:31:38 by dly              ###   ########.fr       */
+/*   Updated: 2023/02/06 18:36:42 by dly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ void	*routine(void *rules)
 	{
 		if (pthread_create(&t, NULL, routine_check_death, rules))
 			return (NULL);
-		if (pthread_detach(t))
-			return (NULL);
+		// if (pthread_detach(t))
+			// return (NULL);
 		if (ft_action(p))
 			return (NULL);
 		if (p->eat_count == p->rules->max_eat)

@@ -6,7 +6,7 @@
 #    By: dly <dly@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/12 14:22:17 by dly               #+#    #+#              #
-#    Updated: 2023/02/03 18:47:29 by dly              ###   ########.fr        #
+#    Updated: 2023/02/06 16:26:25 by dly              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ B_OBJS			= $(B_SRCS:.c=.o)
 
 INCLUDE			= -Iinclude
 CC				= cc
-CFLAGS			= -Wall -Wextra -Werror -g -pthread
+CFLAGS			= -Wall -Wextra -Werror -g -pthread  -fsanitize=thread
 
 RM				= rm -f
 AR				= ar rcs
