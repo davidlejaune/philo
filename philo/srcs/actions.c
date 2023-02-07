@@ -12,7 +12,7 @@
 
 #include "../include/philo.h"
 
-int	ft_take_fork(t_philo *p)
+static int	ft_take_fork(t_philo *p)
 {
 	pthread_mutex_lock(&p->left_fork);
 	print_action(p, p->id, "has taken a fork");
@@ -21,13 +21,12 @@ int	ft_take_fork(t_philo *p)
 		ft_usleep(p->rules->time_to_die + 10);
 		return (1);
 	}
-	p->last_meal = timestamp();
 	pthread_mutex_lock(p->right_fork);
 	print_action(p, p->id, "has taken a fork");
 	return (0);
 }
 
-void	ft_eating(t_philo *p)
+static void	ft_eating(t_philo *p)
 {
 	pthread_mutex_lock(&p->rules->meal);
 	print_action(p, p->id, "is eating");
@@ -39,7 +38,7 @@ void	ft_eating(t_philo *p)
 	pthread_mutex_unlock(&p->left_fork);
 }
 
-void	ft_sleeping(t_philo *p)
+static void	ft_sleeping(t_philo *p)
 {
 	print_action(p, p->id, "is sleeping");
 	ft_usleep(p->rules->time_to_sleep);

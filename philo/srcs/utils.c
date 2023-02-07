@@ -70,6 +70,8 @@ int	is_dead(t_philo *p, int nb)
 	pthread_mutex_lock(&p->rules->stop);
 	if (nb)
 		p->rules->end = true;
+	pthread_mutex_unlock(&p->rules->stop);
+	pthread_mutex_lock(&p->rules->stop);
 	if (p->rules->end)
 	{
 		pthread_mutex_unlock(&p->rules->stop);

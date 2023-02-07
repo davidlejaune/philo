@@ -24,7 +24,7 @@ M_OBJS			= $(M_SRCS:.c=.o)
 
 INCLUDE			= -Iinclude
 CC				= cc
-CFLAGS			= -Wall -Wextra -Werror -g -pthread -fsanitize=thread
+CFLAGS			= -Wall -Wextra -Werror -g -pthread 
 
 RM				= rm -f
 AR				= ar rcs

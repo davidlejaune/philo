@@ -18,12 +18,15 @@ void	*routine_check_death(void *rules)
 
 	p = (t_philo *)rules;
 	ft_usleep(p->rules->time_to_die + 1);
+	pthread_mutex_lock(&p->rules->meal);
 	if (!is_dead(p, 0) && timestamp() - p->last_meal >= p->rules->time_to_die)
 	{
+		pthread_mutex_unlock(&p->rules->meal);
 		print_action(p, p->id, "died");
 		is_dead(p, 1);
 		return (NULL);
 	}
+	pthread_mutex_unlock(&p->rules->meal);
 	return (NULL);
 }
 
@@ -33,22 +36,26 @@ void	*routine(void *rules)
 	pthread_t	t;
 
 	p = (t_philo *)rules;
-	p->last_meal = timestamp();
+	// pthread_mutex_lock(&p->rules->meal);
+	// p->last_meal = timestamp();
+	// pthread_mutex_unlock(&p->rules->meal);
 	if (!(p->id % 2))
 		ft_usleep(p->rules->time_to_eat / 10);
 	while (!is_dead(p, 0))
 	{
 		if (pthread_create(&t, NULL, routine_check_death, rules))
 			return (NULL);
-		// if (pthread_detach(t))
-			// return (NULL);
+		if (pthread_detach(t))
+			return (NULL);
 		if (ft_action(p))
 			return (NULL);
 		if (p->eat_count == p->rules->max_eat)
 		{
+			pthread_mutex_lock(&p->rules->dead);
 			p->rules->nb_ph_ate++;
 			if (p->rules->nb_ph_ate == p->rules->nb_philo)
 				is_dead(p, 1);
+			pthread_mutex_unlock(&p->rules->dead);
 			break ;
 		}
 	}
@@ -67,9 +74,14 @@ void	end_simulation(t_info *rules)
 	}
 	if (rules->philo)
 		free(rules->philo);
-	pthread_mutex_destroy(&rules->printing);
-	pthread_mutex_destroy(&rules->meal);
-	pthread_mutex_destroy(&rules->stop);
+	if (pthread_mutex_destroy(&rules->dead))
+		write(2, "error\n", 6);
+	if (pthread_mutex_destroy(&rules->printing))
+		write(2, "error\n", 6);
+	if (pthread_mutex_destroy(&rules->meal))
+		write(2, "error\n", 6);
+	if (pthread_mutex_destroy(&rules->stop))
+		write(2, "error\n", 6);
 }
 
 int	simulation(t_info *rules)

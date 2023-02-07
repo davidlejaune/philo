@@ -25,10 +25,8 @@ int	ft_end_stop(t_info *rules)
 void	*check_death(void *philo)
 {
 	t_philo	*p;
-	int		i;
 
 	p = (t_philo *)philo;
-	i = 0;
 	while (1)
 	{
 		if (timestamp() - p->last_meal > p->rules->time_to_die)

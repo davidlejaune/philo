@@ -28,6 +28,11 @@
 /* INT_MAX */
 # include <limits.h>
 
+# define FORK "has taken a fork"
+# define EAT "is eating"
+# define SLEEP "is sleeping"
+# define THINK "is thinking" 
+
 struct	s_info;
 
 typedef struct s_philo
@@ -56,6 +61,7 @@ typedef struct s_info
 	pthread_mutex_t	printing;
 	pthread_mutex_t	meal;
 	pthread_mutex_t	stop;
+	pthread_mutex_t	dead;
 }		t_info;
 
 /* init.c */
@@ -76,9 +82,6 @@ void		end_simulation(t_info *rules);
 int			simulation(t_info *rules);
 
 /* action.c */
-int			ft_take_fork(t_philo *p);
-void		ft_eating(t_philo *p);
-void		ft_sleeping(t_philo *p);
 int			ft_action(t_philo *p);
 
 #endif

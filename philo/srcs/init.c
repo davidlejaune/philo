@@ -14,6 +14,8 @@
 
 int	init_mutex(t_info *rules)
 {
+	if (pthread_mutex_init(&rules->dead, NULL))
+		return (1);
 	if (pthread_mutex_init(&rules->printing, NULL))
 		return (1);
 	if (pthread_mutex_init(&rules->meal, NULL))
@@ -38,7 +40,7 @@ int	init_philo(t_info *rules)
 		rules->philo[i].last_meal = 0;
 		rules->philo[i].right_fork = NULL;
 		rules->philo[i].rules = rules;
-		rules->philo[i].last_meal = 0;
+		rules->philo[i].last_meal = timestamp();
 		i++;
 	}
 	return (0);
