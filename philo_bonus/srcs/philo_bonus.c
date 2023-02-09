@@ -6,7 +6,7 @@
 /*   By: dly <dly@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 14:10:28 by dly               #+#    #+#             */
-/*   Updated: 2023/02/03 18:43:15 by dly              ###   ########.fr       */
+/*   Updated: 2023/02/09 19:56:54 by dly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,16 @@ void	*check_death(void *philo)
 	p = (t_philo *)philo;
 	while (1)
 	{
+		sem_wait(p->rules->sem_meal);
 		if (timestamp() - p->last_meal > p->rules->time_to_die)
 		{
+			sem_post(p->rules->sem_meal);
 			print_action(p, p->id, "died");
 			ft_end_stop(p->rules);
 			break ;
 		}
+		sem_post(p->rules->sem_meal);
+		usleep(1000);
 	}
 	return (NULL);
 }
@@ -44,7 +48,7 @@ void	routine(t_philo *p)
 	pthread_t	t;
 
 	sem_wait(p->rules->sem_start);
-	p->last_meal = timestamp();
+	p->last_meal = p->rules->start_time;
 	if (pthread_create(&t, NULL, check_death, p) != 0)
 	{
 		ft_end_stop(p->rules);
@@ -56,7 +60,10 @@ void	routine(t_philo *p)
 		exit(EXIT_FAILURE);
 	}	
 	if (!(p->id % 2))
+	{
+		print_action(p, p->id, "is thinking");
 		ft_usleep(p->rules->time_to_eat / 10);
+	}
 	while (p->eat_count != p->rules->max_eat)
 	{
 		ft_take_fork(p);

@@ -6,7 +6,7 @@
 /*   By: dly <dly@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 19:36:08 by dly               #+#    #+#             */
-/*   Updated: 2023/02/03 18:31:41 by dly              ###   ########.fr       */
+/*   Updated: 2023/02/09 20:04:29 by dly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,9 @@ void	print_action(t_philo *p, int id, char *str)
 
 	pthread_mutex_lock(&p->rules->printing);
 	time = timestamp() - p->rules->start_time;
-	if (!p->rules->end && time >= 0 && time <= (long long)INT_MAX
-		&& !is_dead(p, 0))
+	// if (time >= 0 && time <= (long long)INT_MAX
+	// 	&& is_it_stop(p->rules))
+	if (!is_it_stop(p->rules))
 		printf("%lld %d %s\n", timestamp() - p->rules->start_time, id, str);
 	pthread_mutex_unlock(&p->rules->printing);
 }
@@ -65,18 +66,18 @@ void	ft_usleep(long long time)
 		usleep(time / 10);
 }
 
-int	is_dead(t_philo *p, int nb)
-{
-	pthread_mutex_lock(&p->rules->stop);
-	if (nb)
-		p->rules->end = true;
-	pthread_mutex_unlock(&p->rules->stop);
-	pthread_mutex_lock(&p->rules->stop);
-	if (p->rules->end)
-	{
-		pthread_mutex_unlock(&p->rules->stop);
-		return (1);
-	}
-	pthread_mutex_unlock(&p->rules->stop);
-	return (0);
-}
+// int	is_dead(t_philo *p, int nb)
+// {
+// 	pthread_mutex_lock(&p->rules->stop);
+// 	if (nb)
+// 		p->rules->end = true;
+// 	pthread_mutex_unlock(&p->rules->stop);
+// 	pthread_mutex_lock(&p->rules->stop);
+// 	if (p->rules->end)
+// 	{
+// 		pthread_mutex_unlock(&p->rules->stop);
+// 		return (1);
+// 	}
+// 	pthread_mutex_unlock(&p->rules->stop);
+// 	return (0);
+// }

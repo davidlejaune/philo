@@ -6,7 +6,7 @@
 /*   By: dly <dly@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 18:48:25 by dly               #+#    #+#             */
-/*   Updated: 2023/02/03 17:18:26 by dly              ###   ########.fr       */
+/*   Updated: 2023/02/09 19:34:17 by dly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ typedef struct s_info
 	sem_t			*sem_print;
 	sem_t			*sem_stop;
 	sem_t			*sem_fork;
+	sem_t			*sem_meal;
 	int				nb_philo;
 	int				time_to_die;
 	int				time_to_eat;

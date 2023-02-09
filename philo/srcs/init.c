@@ -6,7 +6,7 @@
 /*   By: dly <dly@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 19:35:04 by dly               #+#    #+#             */
-/*   Updated: 2023/02/03 18:31:24 by dly              ###   ########.fr       */
+/*   Updated: 2023/02/09 18:34:19 by dly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,18 @@
 
 int	init_mutex(t_info *rules)
 {
+	int	i;
+	
+	i = 0;
+	rules->forks = malloc(rules->nb_philo * sizeof(pthread_mutex_t));
+	if (!rules->forks)
+		return (1);
+	while (i < rules->nb_philo)
+	{
+		if (pthread_mutex_init(&rules->forks[i], NULL))
+			return (1);
+		i++;
+	}
 	if (pthread_mutex_init(&rules->dead, NULL))
 		return (1);
 	if (pthread_mutex_init(&rules->printing, NULL))
@@ -38,7 +50,14 @@ int	init_philo(t_info *rules)
 		rules->philo[i].id = i + 1;
 		rules->philo[i].eat_count = 0;
 		rules->philo[i].last_meal = 0;
-		rules->philo[i].right_fork = NULL;
+		// rules->philo[i].right_fork = NULL;
+		rules->philo[i].left_fork = i;
+		rules->philo[i].right_fork = (i + 1) % rules->nb_philo;
+		if (!(rules->philo[i].id % 2))
+		{
+			rules->philo[i].left_fork = (i + 1) % rules->nb_philo;
+			rules->philo[i].right_fork = i;
+		}
 		rules->philo[i].rules = rules;
 		rules->philo[i].last_meal = timestamp();
 		i++;

@@ -6,7 +6,7 @@
 /*   By: dly <dly@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 18:49:20 by dly               #+#    #+#             */
-/*   Updated: 2023/02/03 18:31:28 by dly              ###   ########.fr       */
+/*   Updated: 2023/02/08 19:08:28 by dly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ int	main(int ac, char **av)
 	if (init_all(&rules, av))
 		return (free(rules.philo), 1);
 	simulation(&rules);
-	if (simulation(&rules))
-		return (end_simulation(&rules), 1);
-	end_simulation(&rules);
+	// if (simulation(&rules))
+		// return (end_simulation(&rules), 1);
+	// end_simulation(&rules);
 	return (0);
 }

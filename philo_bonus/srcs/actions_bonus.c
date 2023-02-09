@@ -6,7 +6,7 @@
 /*   By: dly <dly@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 17:29:00 by dly               #+#    #+#             */
-/*   Updated: 2023/02/03 18:42:55 by dly              ###   ########.fr       */
+/*   Updated: 2023/02/09 19:36:18 by dly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,9 @@ void	ft_take_fork(t_philo *p)
 void	ft_eating(t_philo *p)
 {
 	print_action(p, p->id, "is eating");
+	sem_wait(p->rules->sem_meal);
 	p->last_meal = timestamp();
+	sem_post(p->rules->sem_meal);
 	p->eat_count++;
 	ft_usleep(p->rules->time_to_eat);
 	sem_post(p->rules->sem_fork);
