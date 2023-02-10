@@ -6,7 +6,7 @@
 /*   By: dly <dly@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 18:48:25 by dly               #+#    #+#             */
-/*   Updated: 2023/02/09 18:31:25 by dly              ###   ########.fr       */
+/*   Updated: 2023/02/10 21:34:25 by dly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,9 @@ typedef struct s_philo
 	int				eat_count;
 	long long		last_meal;
 	pthread_mutex_t	meal_time;
-	// pthread_mutex_t	left_fork;
-	// pthread_mutex_t	*right_fork;
 	int				left_fork;
 	int				right_fork;
 	struct s_info	*rules;
-	
 }		t_philo;
 
 typedef struct s_info
@@ -60,10 +57,9 @@ typedef struct s_info
 	long long		start_time;
 	bool			end;
 	bool			all_eat;
-	int				nb_ph_ate;
 	t_philo			*philo;
-	pthread_mutex_t	*forks;
 	pthread_t		th_end;
+	pthread_mutex_t	*forks;
 	pthread_mutex_t	printing;
 	pthread_mutex_t	meal;
 	pthread_mutex_t	stop;
@@ -73,17 +69,18 @@ typedef struct s_info
 /* init.c */
 int			init_all(t_info *rules, char **av);
 
-/* free.c */
-void		free_all(t_info *rules);
+/* check_death.c */
+void		*check_death(void *data);
 
 /* utils.c */
 int			ft_atoi(const char *nptr);
 long long	timestamp(void);
 void		ft_usleep(long long time);
 void		print_action(t_philo *p, int id, char *str);
+void		start_sync(long long t_start);
 
 /* philo.c */
-bool	is_it_stop(t_info *rules);
+bool		is_it_stop(t_info *rules);
 void		end_simulation(t_info *rules);
 int			simulation(t_info *rules);
 

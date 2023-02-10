@@ -6,7 +6,7 @@
 #    By: dly <dly@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/12 14:22:17 by dly               #+#    #+#              #
-#    Updated: 2023/02/09 19:31:08 by dly              ###   ########.fr        #
+#    Updated: 2023/02/10 20:57:27 by dly              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@
 ################################################################################
 
 BONUS_FILES		= main_bonus.c  init_bonus.c  utils_bonus.c \
-				  philo_bonus.c  actions_bonus.c
+				  philo_bonus.c  actions_bonus.c  check_death_bonus.c
 
 B_SRCS_DIR		= srcs/
 
@@ -27,7 +27,7 @@ B_OBJS			= $(B_SRCS:.c=.o)
 
 INCLUDE			= -Iinclude
 CC				= cc
-CFLAGS			= -Wall -Wextra -Werror -g -pthread -fsanitize=thread 
+CFLAGS			= -Wall -Wextra -Werror -g -pthread 
 
 RM				= rm -f
 AR				= ar rcs

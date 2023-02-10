@@ -6,7 +6,7 @@
 /*   By: dly <dly@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 18:48:25 by dly               #+#    #+#             */
-/*   Updated: 2023/02/09 19:34:17 by dly              ###   ########.fr       */
+/*   Updated: 2023/02/10 21:03:23 by dly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,20 +67,25 @@ typedef struct s_info
 	t_philo			*philo;
 }		t_info;
 
-/* init.c */
+/* init_bonus.c */
 int			init_all(t_info *rules, char **av);
 
-/* utils.c */
+/* utils_bonus.c */
 int			ft_atoi(char const *nptr);
 long long	timestamp(void);
 void		ft_usleep(long long time);
 void		print_action(t_philo *p, int id, char *str);
 
-/* philo.c */
+/* check_death_bonus.c */
+void		init_monitoring(t_philo *p);
+int			ft_end_stop(t_info *rules);
+
+/* philo_bonus.c */
 int			simulation(t_info *rules);
 int			end_simulation(t_info *rules);
+void		free_sem(t_info *rules);
 
-/* action.c */
+/* action_bonus.c */
 void		ft_take_fork(t_philo *p);
 void		ft_eating(t_philo *p);
 void		ft_sleeping(t_philo *p);

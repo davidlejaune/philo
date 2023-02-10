@@ -6,7 +6,7 @@
 /*   By: dly <dly@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 19:36:08 by dly               #+#    #+#             */
-/*   Updated: 2023/02/03 18:43:19 by dly              ###   ########.fr       */
+/*   Updated: 2023/02/10 21:19:51 by dly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,5 +61,5 @@ void	ft_usleep(long long time)
 
 	past = timestamp();
 	while ((timestamp() - past) < time)
-		usleep(time / 10);
+		usleep(50);
 }

@@ -6,16 +6,16 @@
 /*   By: dly <dly@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 19:35:04 by dly               #+#    #+#             */
-/*   Updated: 2023/02/09 18:34:19 by dly              ###   ########.fr       */
+/*   Updated: 2023/02/10 21:34:20 by dly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-int	init_mutex(t_info *rules)
+static int	init_mutex(t_info *rules)
 {
 	int	i;
-	
+
 	i = 0;
 	rules->forks = malloc(rules->nb_philo * sizeof(pthread_mutex_t));
 	if (!rules->forks)
@@ -37,7 +37,7 @@ int	init_mutex(t_info *rules)
 	return (0);
 }
 
-int	init_philo(t_info *rules)
+static int	init_philo(t_info *rules)
 {
 	int	i;
 
@@ -50,7 +50,6 @@ int	init_philo(t_info *rules)
 		rules->philo[i].id = i + 1;
 		rules->philo[i].eat_count = 0;
 		rules->philo[i].last_meal = 0;
-		// rules->philo[i].right_fork = NULL;
 		rules->philo[i].left_fork = i;
 		rules->philo[i].right_fork = (i + 1) % rules->nb_philo;
 		if (!(rules->philo[i].id % 2))
@@ -77,18 +76,19 @@ int	init_all(t_info *rules, char **av)
 	if (av[5])
 	{
 		rules->max_eat = ft_atoi(av[5]);
-		if (rules->max_eat < 0)
+		if (rules->max_eat <= 0)
 			return (1);
 	}
 	else
 		rules->max_eat = -1;
-	rules->start_time = timestamp();
 	rules->end = false;
 	rules->all_eat = false;
-	rules->nb_ph_ate = 0;
 	if (init_philo(rules))
 		return (1);
 	if (init_mutex(rules))
+	{
+		free(rules->philo);
 		return (1);
+	}
 	return (0);
 }

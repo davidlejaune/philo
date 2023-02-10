@@ -16,7 +16,7 @@
 #                                                                              #
 ################################################################################
 
-SRCS_FILES		= main.c  init.c  utils.c  philo.c  actions.c 
+SRCS_FILES		= main.c  init.c  utils.c  philo.c  actions.c  check_death.c
 
 SRCS_DIR		= srcs/
 M_SRCS			= $(addprefix $(SRCS_DIR), $(SRCS_FILES))
@@ -24,7 +24,7 @@ M_OBJS			= $(M_SRCS:.c=.o)
 
 INCLUDE			= -Iinclude
 CC				= cc
-CFLAGS			= -Wall -Wextra -Werror -g -pthread -fsanitize=thread 
+CFLAGS			= -Wall -Wextra -Werror -g -pthread 
 
 RM				= rm -f
 AR				= ar rcs

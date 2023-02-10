@@ -6,7 +6,7 @@
 /*   By: dly <dly@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 17:29:00 by dly               #+#    #+#             */
-/*   Updated: 2023/02/09 17:25:27by dly              ###   ########.fr       */
+/*   Updated: 2023/02/10 20:27:14 by dly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,6 @@
 
 static int	ft_take_fork(t_philo *p)
 {
-	// if (p->id == p->rules->nb_philo)
-	// 	pthread_mutex_lock(&p->left_fork);
-	// else
-	// 	pthread_mutex_lock(p->right_fork);
 	pthread_mutex_lock(&p->rules->forks[p->left_fork]);
 	print_action(p, p->id, "has taken a fork");
 	if (p->rules->nb_philo == 1)
@@ -25,12 +21,7 @@ static int	ft_take_fork(t_philo *p)
 		ft_usleep(p->rules->time_to_die + 10);
 		return (1);
 	}
-	// if (p->id == p->rules->nb_philo)
-	// 	pthread_mutex_lock(p->right_fork);
-		
-	// else
-	// 	pthread_mutex_lock(&p->left_fork);
-	pthread_mutex_lock(&p->rules->forks[p->right_fork]);	
+	pthread_mutex_lock(&p->rules->forks[p->right_fork]);
 	print_action(p, p->id, "has taken a fork");
 	return (0);
 }
@@ -40,20 +31,12 @@ static void	ft_eating(t_philo *p)
 	pthread_mutex_lock(&p->meal_time);
 	print_action(p, p->id, "is eating");
 	p->last_meal = timestamp();
-	p->eat_count++;
 	pthread_mutex_unlock(&p->meal_time);
 	ft_usleep(p->rules->time_to_eat);
-	// if (p->id == p->rules->nb_philo)
-	// {
-	// 	pthread_mutex_unlock(p->right_fork);
-	// 	pthread_mutex_unlock(&p->left_fork);
-	// }
-	// else
-	// {
-	// 	pthread_mutex_unlock(&p->left_fork);
-	// 	pthread_mutex_unlock(p->right_fork);
-	// }
-	pthread_mutex_unlock(&p->rules->forks[p->right_fork]);	
+	pthread_mutex_lock(&p->meal_time);
+	p->eat_count++;
+	pthread_mutex_unlock(&p->meal_time);
+	pthread_mutex_unlock(&p->rules->forks[p->right_fork]);
 	pthread_mutex_unlock(&p->rules->forks[p->left_fork]);
 }
 

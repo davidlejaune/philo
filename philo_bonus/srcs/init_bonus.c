@@ -6,7 +6,7 @@
 /*   By: dly <dly@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 19:35:04 by dly               #+#    #+#             */
-/*   Updated: 2023/02/09 19:36:45 by dly              ###   ########.fr       */
+/*   Updated: 2023/02/10 21:30:19 by dly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,19 @@
 
 int	init_semaphore(t_info *rules)
 {
-	sem_unlink("start");
-	sem_unlink("print");
-	sem_unlink("stop");
-	sem_unlink("fork");
-	sem_unlink("meal");
-	rules->sem_start = sem_open("start", O_CREAT, 0600, 0);
-	rules->sem_print = sem_open("print", O_CREAT, 0600, 1);
-	rules->sem_stop = sem_open("stop", O_CREAT, 0600, 0);
-	rules->sem_fork = sem_open("fork", O_CREAT, 0600, rules->nb_philo);
-	rules->sem_meal = sem_open("meal", O_CREAT, 0600, 1);
+	sem_unlink("/start");
+	sem_unlink("/print");
+	sem_unlink("/stop");
+	sem_unlink("/fork");
+	sem_unlink("/meal");
+	rules->sem_start = sem_open("/start", O_CREAT, 0600, 0);
+	rules->sem_print = sem_open("/print", O_CREAT, 0600, 1);
+	rules->sem_stop = sem_open("/stop", O_CREAT, 0600, 0);
+	rules->sem_fork = sem_open("/fork", O_CREAT, 0600, rules->nb_philo);
+	rules->sem_meal = sem_open("/meal", O_CREAT, 0600, 1);
 	if (rules->sem_start == SEM_FAILED || rules->sem_print == SEM_FAILED
-		|| rules->sem_stop == SEM_FAILED || rules->sem_fork == SEM_FAILED || rules->sem_meal == SEM_FAILED)
+		|| rules->sem_stop == SEM_FAILED || rules->sem_fork == SEM_FAILED
+		|| rules->sem_meal == SEM_FAILED)
 		return (1);
 	return (0);
 }
@@ -61,7 +62,7 @@ int	init_all(t_info *rules, char **av)
 	if (av[5])
 	{
 		rules->max_eat = ft_atoi(av[5]);
-		if (rules->max_eat < 0)
+		if (rules->max_eat <= 0)
 			return (1);
 	}
 	else
@@ -70,6 +71,9 @@ int	init_all(t_info *rules, char **av)
 	if (init_philo(rules))
 		return (1);
 	if (init_semaphore(rules))
+	{
+		free(rules->philo);
 		return (1);
+	}
 	return (0);
 }
