@@ -1,6 +1,5 @@
 # philo
-42 School project about thread / mutex
-
+ 
 This project is about learning the basics of threading a process.\
 You will see how to create threads and you will discover mutexes.
 
